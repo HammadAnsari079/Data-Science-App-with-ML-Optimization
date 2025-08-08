@@ -1,0 +1,14 @@
+2025-08-07 16:16:13,656 - ProductivityAnalyzer - INFO - Starting analysis...
+2025-08-07 16:16:13,686 - ProductivityAnalyzer - INFO - Loaded data from 'uploads\analysis_data.csv'
+2025-08-07 16:16:13,687 - ProductivityAnalyzer - INFO - Target column: LeaveOrNot
+2025-08-07 16:16:13,687 - ProductivityAnalyzer - INFO - Predictor columns: ['JoiningYear', 'PaymentTier', 'Age', 'ExperienceInCurrentDomain']
+2025-08-07 16:16:13,688 - ProductivityAnalyzer - INFO - I) PRELIMINARY ANALYSIS - DESCRIPTIVE STATISTICS
+2025-08-07 16:16:16,277 - ProductivityAnalyzer - INFO - Saved descriptive plots to static/plots/
+2025-08-07 16:16:16,278 - ProductivityAnalyzer - INFO - II) PRINCIPAL COMPONENT ANALYSIS (PCA)
+2025-08-07 16:16:17,539 - ProductivityAnalyzer - INFO - Saved PCA plots to static/plots/
+2025-08-07 16:16:17,539 - ProductivityAnalyzer - INFO - III) SIMPLE LINEAR REGRESSION
+2025-08-07 16:16:20,552 - ProductivityAnalyzer - INFO - Saved simple regression plots to static/plots/
+2025-08-07 16:16:20,553 - ProductivityAnalyzer - INFO - IV) MULTIPLE LINEAR REGRESSION
+2025-08-07 16:16:23,496 - ProductivityAnalyzer - INFO - Saved multiple regression plots to static/plots/
+2025-08-07 16:16:23,687 - ProductivityAnalyzer - INFO - ANALYSIS COMPLETE
+2025-08-07 16:16:23,700 - ProductivityAnalyzer - INFO - Results saved to: output

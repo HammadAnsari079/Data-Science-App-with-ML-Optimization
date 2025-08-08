@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Analysis Results</h1>
+            <p>Generated on: {{ results.analysis_timestamp[:10] }} at {{ results.analysis_timestamp[11:19] }}</p>
+        </header>
+
+        <main>
+            <section class="summary">
+                <h2>Executive Summary</h2>
+                <ul>
+                    {% if results.descriptive_stats %}
+                        <li>Dataset contains {{ results.descriptive_stats.n_observations }} observations with {{ results.descriptive_stats.n_variables }} variables.</li>
+                        <li>{{ results.descriptive_stats.n_missing }} missing values were handled.</li>
+                        <li>Clean dataset: {{ results.descriptive_stats.n_clean }} observations.</li>
+                        <li>Target variable: <b>{{ results.descriptive_stats.target_col }}</b></li>
+                    {% endif %}
+
+                    {% if results.simple_regression %}
+                        <li>Simple regression ({{ results.simple_regression.predictor }} → {{ results.simple_regression.target }}): R² = {{ results.simple_regression.r_squared * 100 | round(1) }}%</li>
+                    {% endif %}
+
+                    {% if results.multiple_regression %}
+                        <li>Best multiple regression model explains {{ results.multiple_regression.adjusted_r_squared * 100 | round(1) }}% of variance in <b>{{ results.multiple_regression.target }}</b>.</li>
+                        <li>Key predictors: {{ results.multiple_regression.best_features | join(', ') }}</li>
+                    {% endif %}
+                </ul>
+            </section>
+
+            <section class="details">
+                <h2>Detailed Findings</h2>
+
+                {% if results.descriptive_stats %}
+                    <h3>Descriptive Statistics</h3>
+                    <p>Mean ({{ results.descriptive_stats.target_col }}): {{ results.descriptive_stats.target_statistics.mean | round(4) }}</p>
+                    <p>Standard deviation: {{ results.descriptive_stats.target_statistics.std | round(4) }}</p>
+                    <p>Range: {{ results.descriptive_stats.target_statistics.min | round(4) }} – {{ results.descriptive_stats.target_statistics.max | round(4) }}</p>
+                    <p>Top correlations with {{ results.descriptive_stats.target_col }}:</p>
+                    <ul>
+                        {% for var, corr in results.descriptive_stats.correlations.items() %}
+                            {% if var != results.descriptive_stats.target_col %}
+                                <li>{{ var }}: {{ corr | round(4) }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {% if results.pca_results %}
+                    <h3>Principal Component Analysis</h3>
+                    <p>First two components explain {{ (results.pca_results.explained_variance_ratio[0] + results.pca_results.explained_variance_ratio[1]) * 100 | round(1) }}% of variance.</p>
+                    <p>PC1: {{ results.pca_results.explained_variance_ratio[0] * 100 | round(1) }}%</p>
+                    <p>PC2: {{ results.pca_results.explained_variance_ratio[1] * 100 | round(1) }}%</p>
+                {% endif %}
+
+                {% if results.simple_regression %}
+                    <h3>Simple Linear Regression</h3>
+                    <p>Model: {{ results.simple_regression.target }} = {{ results.simple_regression.intercept | round(4) }} + {{ results.simple_regression.slope | round(4) }} × {{ results.simple_regression.predictor }}</p>
+                    <p>R²: {{ results.simple_regression.r_squared | round(4) }}, RMSE: {{ results.simple_regression.rmse | round(4) }}</p>
+                    <p>Slope p-value: {{ results.simple_regression.slope_pvalue | round(6) }}</p>
+                {% endif %}
+
+                {% if results.multiple_regression %}
+                    <h3>Multiple Linear Regression</h3>
+                    <p>Adjusted R²: {{ results.multiple_regression.adjusted_r_squared | round(4) }}, RMSE: {{ results.multiple_regression.rmse | round(4) }}</p>
+                    <p>Best model uses {{ results.multiple_regression.best_features | length }} predictors.</p>
+                    <p>Coefficients:</p>
+                    <ul>
+                        {% for var, coef in results.multiple_regression.coefficients.items() %}
+                            <li>{{ var }}: {{ coef | round(6) }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </section>
+
+            <section class="visualizations">
+                <h2>Visualizations</h2>
+                <div class="image-list">
+                    {% for plot in plot_files %}
+                        <img src="{{ url_for('static', filename='plots/' ~ plot) }}" alt="{{ plot }}" style="max-width:100%;margin-bottom:30px;">
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+
+        <footer>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analysis System</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Productivity Analysis System</h1>
+            <p>Upload a CSV file to analyze productivity using statistical and machine learning methods.</p>
+        </header>
+
+        <main>
+            <form action="/analyze" method="post" enctype="multipart/form-data" class="upload-form">
+                <label for="data_file">Upload CSV File:</label>
+                <input type="file" id="data_file" name="data_file" accept=".csv" required>
+                <button type="submit">Run Analysis</button>
+            </form>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <p class="error">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </main>
+
+        <footer>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+================================================================================
+DATASET ANALYSIS REPORT
+================================================================================
+Generated on: 2025-08-07 16:16:23
+
+EXECUTIVE SUMMARY
+----------------------------------------
+• Dataset: 4653 obs, 9 vars
+• Clean data: 4653 obs
+• JoiningYear model R²: 3.3%
+• Best model Adj R²: 6.8%
+• Best predictors: JoiningYear, PaymentTier, Age, ExperienceInCurrentDomain
+
+RECOMMENDATIONS
+----------------------------------------
+• Model is weak — collect better data
